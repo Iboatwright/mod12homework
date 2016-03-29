@@ -1,0 +1,40 @@
+Chapter 12 Programming Exercise 6. Ackermann’s Function
+-------------------------------------------------------
+Ackermann’s Function is a recursive mathematical algorithm that can be
+ used to test how well a computer performs recursion. Design a function
+ ackermann(m, n), which solves Ackermann’s Function. Use the following
+ logic in your function:**
+
+    if m == 0:  acker = n + 1
+    elif n == 0: acker = ackermann(m – 1, 1)
+    else acker: = ackermann(m – 1, ackermann(m, n – 1))
+    return acker
+
+ **(I replaced the pseudocode with python-esque)
+
+
+Pseudocode
+----------
+Module main()
+    // Local variables
+
+
+    // Display intro to user.
+    Call fluffy_intro()
+
+    // Function calls
+
+
+End Module
+
+Module fluffy_intro()
+    Display 'Welcome to Ackermann's Function.'
+    Display 'This program tests how well a computer performs recursion'
+    Display ' and displays the results.'
+End Module
+
+
+// Displays the summation results to the user.
+Module display_results(results)
+    Display 'Your computer did this: ', results
+End Module
