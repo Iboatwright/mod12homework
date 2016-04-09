@@ -3,6 +3,9 @@
 # Name of program: Ackermann's Function
 # Description of program:  This program uses a version of Ackermann's
 #   Function to evaluate how well a computer performs recursion.
+
+### !Do not use an input! Run a few iterations with timeit and display the results. Can run an itterable version to compare.
+
 import timeit
 import sys
 
