@@ -15,11 +15,15 @@ Ackermann’s Function is a recursive mathematical algorithm that can be
 Alporithm
 ---------
 woof()
-
+old>>>>>
 1) pair of valid non-negative integers for m, n
 2) compute A(m,n) using code above
 3) display results? what results? time? depth?
-
+<<<<<new
+1) intro the program, esplain what it does
+2) run program loop
+3) run timeit ackermann
+    ?) should I use multiple inputs or just the one that hits the recursion limit
 
 Pseudocode
 ----------

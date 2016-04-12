@@ -4,26 +4,36 @@
 # Description of program:  This program uses a version of Ackermann's
 #   Function to evaluate how well a computer performs recursion.
 
-### !Do not use an input! Run a few iterations with timeit and display the results. Can run an itterable version to compare.
 
 import timeit
 import sys
 
+COUNT = 1
+
 def main():
     # Local variables
-    act = 'count'
-    do = dict(count=do_count, time=do_time, draw=do_draw)
+    m, n = 3, 3
+
     results = ''
-    sys.setrecursionlimit(1500)
+    sys.setrecursionlimit(3500) # 3500 can run 3,8
     # Display the intro to the user.
     fluffy_intro()
 
-    # todo: write the actual program
-    m = get_ack_args('1st')
-    n = get_ack_args('2nd')
-    ackTime = timed_ack(m, n)
+    # todo: write the actual
+    sup = "m ,n = {}, {}; from __main__ import ack_{{}}".format(m, n)
+    case_c = dict(tit='Count', sup=sup.format('c'), stat="""ack_c(m, n)""")
+    case_t = dict(tit='Ternary', sup=sup.format('t'), stat="""ack_t(m, n)""")
 
-    results = do[act](m, n)
+    run_set = (case_c, case_t)
+
+    for _ in range(1):
+        global COUNT
+        COUNT = 1
+        ret_set = []
+        t_comp(ret_set, run_set, 't')
+        print(t_rep(ret_set), end='')
+        print('Count = {}'.format(COUNT))
+    # results = do_time(m, n)
     # Display the results to the user.
     display_results(results)
     return None
@@ -43,33 +53,52 @@ def display_results(results):
     return None
 
 
+def t_rep(ret):
+    """ Takes a list of paired (title, results) tuples and
+    formats them into a single return string. """
+    pr = ''
+    for c in ret:
+        pr += "Case: {1}{0:^5}{2}\n".format('-', c[0], c[1])
+    return pr
+
+
+def t_comp(ret, cases, t='r'):
+    """ ret is a reference pointer to an empty list
+    cases is a list of dicts with the timeit args """
+    for d in cases:
+        if 'num' not in d: d['num'] = 1
+        if t == 'r':
+            if 'rep' not in d: d['rep'] = 3
+            ret.append((
+                        d['tit'],
+                        timeit.repeat(d['stat'], d['sup'], repeat=d['rep'], number=d['num'])
+                      ))
+        else:
+            ret.append((
+                        d['tit'],
+                        timeit.timeit(d['stat'], d['sup'], number=d['num'])
+                       ))
+    return None
+
+
+def ack_c(m, n):
+    global COUNT
+    COUNT += 1
+    print('m: {}, n: {}, count: {}'.format(m, n, COUNT))
+    return (n + 1) if m == 0 else (ack_c(m - 1, 1) if n == 0 else
+                                   ack_c(m - 1, ack_c(m, n-1)))
+
+
+def ack_t(m, n):
+    """ Ackermann's Function as a Ternary in the return """
+    return (n + 1) if m == 0 else (ack_t(m - 1, 1) if n == 0 else
+                                   ack_t(m - 1, ack_t(m, n-1)))
+
+
 def do_time(m, n):
     ackTime = timed_ack(m, n)
-    return 'It took {} seconds to run ackermann({}, {})'.format(ackTime, m ,n)
-
-
-def do_count(m, n):
-    ackCount = ackermann(m, n)
-    return 'The computation of ackermann({}, {}) is {}.'.format(m, n, ackCount)
-
-
-def do_draw(m, n):
-    return "This isn't implemented yet."
-
-
-def get_ack_args(arg):
-    val = 0
-    while True:
-        try:
-            val = int(input("Please enter the {} argument.\n".format(arg)))
-            if val >= 0:
-                break
-            else:
-                raise ValueError
-        except ValueError:
-            print('Invalid entry.  Please enter a nonnegative integer.')
-    return val
-
+    return 'It took {} seconds to run ackermann({}, {})\n' \
+           ' with a recursion depth of {}'.format(ackTime, m ,n, COUNT)
 
 
 def timed_ack(m, n):
@@ -78,18 +107,8 @@ def timed_ack(m, n):
     return timeit.timeit(stmt=stmt, setup=setup, number=1)
 
 
-#
-def ackermann(m, n, s='A({}, {})'):
-    s = s.format(m, n) if s == 'A({}, {})' else s
-    if m == 0:
-        s = s.format(n+1)
-    elif n == 0:
-        s += s.format("A(m-1, 1))")
-    else:
-        s += s.format("A(m-1, (A(m, n-1))))")
-    print(s)
-    return (n + 1) if m == 0 else (ackermann(m - 1, 1, s) if n == 0 else
-                                   ackermann(m - 1, ackermann(m, n-1, s), s))
+
+
 
 
 main()
