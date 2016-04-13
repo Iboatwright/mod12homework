@@ -1,0 +1,38 @@
+Chapter 12 Programming Exercise 4. Sum of Numbers
+-------------------------------------------------
+Design a function that accepts an integer argument and returns the sum
+    of all the integers from 1 up to the number passed as an argument.
+    For example, if 50 is passed as an argument, the function will
+    return the sum of 1, 2, 3, 4, . . . 50. Use recursion to calculate
+    the sum.
+
+Pseudocode
+----------
+Module main()
+    // Local variables
+    Declare integer user_number
+    Declare integer number_sum
+
+    // Display intro to user.
+    Call fluffy_intro()
+
+    // Function calls
+    user_number = get_user_number()
+    number_sum = sum_number(user_number)
+
+    // Display results to the user.
+    display_results(user_number, number_sum)
+End Module
+
+Module fluffy_intro()
+    Display 'Welcome to the Sum of Numbers.'
+    Display 'This program uses a recursive function to sum all the numbers'
+    Display 'from 1 to a user enter integer and displays the calculated sum.'
+End Module
+
+
+// Displays the summation results to the user.
+Module display_results(user_number, number_sum)
+    Display 'The sum of all numbers from 1 to', user_number, 'is:'
+    Display number_sum
+End Module
