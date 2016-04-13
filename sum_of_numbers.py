@@ -21,7 +21,7 @@ def main():
         user_number = get_user_number()
 
         # Sum integers from 1 to user number
-        number_sum = prev_rec_err(user_number)
+        number_sum = sum_num_wrapper(user_number)
 
         # Display the results to the user.
         display_results(user_number, number_sum)
@@ -48,6 +48,7 @@ def display_results(user_number, number_sum):
     return None
 
 
+# Returns a validated user input positive integer.
 def get_user_number(num=0):
     print('\nPlease enter a positive integer.', end='')
     while True:
@@ -71,15 +72,26 @@ def go_again():
 
 
 # Prevent RecursionError by breaking user_number into recursive chunks.
-def prev_rec_err(i, num=0):
+def sum_num_wrapper(i, num=0):
+    # If user_number is greater than 900 use integer division to get
+    #   how many times 900 goes into the user_number.  Then set the return
+    #   number equal to the recursive sum of 900 by the multiple and subtract
+    #   900 * the multiple from the user_number.
     if i > 900:
         x = i//900
         num = x * sum_number(900)
         i -= x * 900
+    # Add the recursive sum of (the remainder of) the user_number to the
+    #   return number.
     num += sum_number(i)
     return num
 
 
+# Takes the user_number as the parameter, i, and uses a ternary statement
+#   to return either i + a recursive call to sum_number with the i - 1
+#   as the argument.  Or if i equals zero the recursion reverses and the
+#   sum values are returned to each previous call until the final sum is
+#   returned to the wrapper function.
 def sum_number(i):
     return (i + sum_number(i - 1)) if (i - 1) != 0 else i
 

@@ -10,19 +10,27 @@ Pseudocode
 ----------
 Module main()
     // Local variables
-    Declare integer user_number
-    Declare integer number_sum
+    Declare String end_program = 'no'
+    Declare Integer user_number
+    Declare Integer number_sum
 
     // Display intro to user.
     Call fluffy_intro()
 
-    // Function calls
-    user_number = get_user_number()
-    number_sum = sum_number(user_number)
+    While end_program == 'no'
+        // Function calls
+        Set user_number = get_user_number()
+        Set number_sum = sum_number(user_number)
 
-    // Display results to the user.
-    display_results(user_number, number_sum)
+        // Display results to the user.
+        display_results(user_number, number_sum)
+
+        // Does the user want to enter another number?
+        Display 'Do you want to end the program? Yes or No?'
+        Input end_program
+    End While
 End Module
+
 
 Module fluffy_intro()
     Display 'Welcome to the Sum of Numbers.'
@@ -36,3 +44,23 @@ Module display_results(user_number, number_sum)
     Display 'The sum of all numbers from 1 to', user_number, 'is:'
     Display number_sum
 End Module
+
+
+// Get an integer input by the user
+Function integer get_user_number()
+    Declare Integer user_number
+    Display 'Please enter a positive integer'
+    Input user_number
+    Return user_number
+End Function
+
+
+// Recursive function to get the sum of the user entered integer.
+Function integer sum_number(Integer user_number)
+    If user_number != 0 Then
+        Return user_number + sum_number(user_number - 1)
+    Else
+        Return user_number
+    End If
+End Function
+
